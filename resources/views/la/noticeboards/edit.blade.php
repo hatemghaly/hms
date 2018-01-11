@@ -1,0 +1,62 @@
+@extends("la.layouts.app")
+
+@section("contentheader_title")
+	<a href="{{ url(config('laraadmin.adminRoute') . '/noticeboards') }}">Noticeboard</a> :
+@endsection
+@section("contentheader_description", $noticeboard->$view_col)
+@section("section", "Noticeboards")
+@section("section_url", url(config('laraadmin.adminRoute') . '/noticeboards'))
+@section("sub_section", "Edit")
+
+@section("htmlheader_title", "Noticeboards Edit : ".$noticeboard->$view_col)
+
+@section("main-content")
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="box">
+	<div class="box-header">
+		
+	</div>
+	<div class="box-body">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				{!! Form::model($noticeboard, ['route' => [config('laraadmin.adminRoute') . '.noticeboards.update', $noticeboard->id ], 'method'=>'PUT', 'id' => 'noticeboard-edit-form']) !!}
+					@la_form($module)
+					
+					{{--
+					@la_input($module, 'title')
+					@la_input($module, 'description')
+					@la_input($module, 'start_date')
+					@la_input($module, 'end_date')
+					@la_input($module, 'status')
+					--}}
+                    <br>
+					<div class="form-group">
+						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <button class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/noticeboards') }}">Cancel</a></button>
+					</div>
+				{!! Form::close() !!}
+			</div>
+		</div>
+	</div>
+</div>
+
+@endsection
+
+@push('scripts')
+<script>
+$(function () {
+	$("#noticeboard-edit-form").validate({
+		
+	});
+});
+</script>
+@endpush
